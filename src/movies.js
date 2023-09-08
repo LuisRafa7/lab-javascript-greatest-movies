@@ -99,14 +99,14 @@ function orderByYear(moviesArray) {
 // Iteration 6: Alphabetic Order - Order by title and print the first 20 titles
 function orderAlphabetically(moviesArray) {
   const newArr = moviesArray.map((films) => {
-    return films.title;
+    return films;
   })
 
   const orderAlpha = newArr.sort((a, b) => {
     if (a.title > b.title){
       return 1
     }
-    else if (a.title > b.title) {
+    else if (a.title < b.title) {
       return -1
     }
     else {
@@ -114,12 +114,38 @@ function orderAlphabetically(moviesArray) {
     }
   })
   
-  const first20 = orderAlpha.splice(0,20);
-  return first20;
+  const first20 = orderAlpha.map((movie)=> movie.title).slice(0,20);
+  return first20
 }
 
 // BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
-function turnHoursToMinutes(moviesArray) {}
+function turnHoursToMinutes(moviesArray) {
+  const newArr = JSON.parse(JSON.stringify(moviesArray));
+
+  const hoursToMin = newArr.map((movie) => {
+    if (movie.duration.length < 3) {
+      let hours = movie.duration.split("h");
+      let hoursNumber = Number(hours[0]);
+      let minutesFinal = (hoursNumber * 60)
+      movie.duration = minutesFinal;
+      return movie;
+    }
+    else{
+      let hoursSplit = movie.duration.split(" ");
+      let hours = hoursSplit[0].split("h");
+      let hoursNumber = Number(hours[0]);
+      let minutes = hoursSplit[1].split("min");
+      let minutesNumber = Number(minutes[0]);
+      let minutesFinal = (hoursNumber * 60) + minutesNumber;
+      
+      movie.duration = minutesFinal;
+      return movie;
+    }
+    
+  })
+
+  return hoursToMin
+}
 
 // BONUS - Iteration 8: Best yearly score average - Best yearly score average
 function bestYearAvg(moviesArray) {}
